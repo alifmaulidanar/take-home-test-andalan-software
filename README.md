@@ -1,6 +1,6 @@
 # Simple Fullstack Web App using Reqres Public API
 
-This is a simple fullstack web application that allows users to perform CRUD operations by utilizing the Reqres Public API. The app features a clean, minimalistic design and provides a seamless user experience for interacting with user and resource data.
+This is a simple fullstack web application that allows users to perform CRUD operations by utilizing the Reqres Public API. The app features a clean, minimalistic design and provides a seamless user experience for interacting with user and resource data. This project is a technical assignment for the **Andalan Software** for the position of **Software Developer**.
 
 Since it uses a public API, the data does not persist in a database and any interaction with the API does not affect the actual data on Reqres. This project is built using modern technologies, including:
 
@@ -48,9 +48,9 @@ Here are the endpoints available in the project:
 
 For the Create, Update, and Delete operations on the /users page, the app will show a modal dialog containing the form input. No new pages are opened; everything happens within the same view.
 
-- Create (POST): You can create a new user or resource by submitting a form.
-- Update (PUT/PATCH): You can update user or resource data through modal dialogs.
-- Delete (DELETE): Users and resources can be deleted via modals without navigating away from the page.
+- **Create (POST)**: You can create a new user or resource by submitting a form.
+- **Update (PUT/PATCH)**: You can update user or resource data through modal dialogs.
+- **Delete (DELETE)**: Users and resources can be deleted via modals without navigating away from the page.
 
 ## Installation
 
@@ -59,13 +59,13 @@ To run this project locally, follow the steps below:
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/alifmaulidanar/take-home-test-andalan-software.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd <project-directory>
+cd take-home-test-andalan-software
 ```
 
 3. Install the dependencies:
@@ -90,5 +90,6 @@ http://localhost:3000
 
 This application is hosted on Vercel. You can access the live version of the app by visiting the following link:
 
-Conclusion
+## Conclusion
+
 This project serves as a great starting point for anyone looking to learn about full-stack development with React, Next.js, and working with public APIs like Reqres. It's also a useful tool to demonstrate how to build simple and efficient CRUD interfaces with modern frontend technologies.
