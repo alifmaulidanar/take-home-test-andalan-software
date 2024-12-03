@@ -90,7 +90,7 @@ http://localhost:3000
 
 This application is hosted on Vercel. You can access the live version of the app by visiting the following link:
 
-https://take-home-test-andalan-software-tsic.vercel.app/
+https://take-home-test-andalan-software.vercel.app/
 
 ## Conclusion
 
