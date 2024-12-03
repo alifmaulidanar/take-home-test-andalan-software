@@ -1,6 +1,6 @@
 # Simple Fullstack Web App using Reqres Public API
 
-This is a simple fullstack web application that allows users to perform CRUD operations by utilizing the Reqres Public API. The app features a clean, minimalistic design and provides a seamless user experience for interacting with user and resource data. This project is a technical assignment for the **Andalan Software** for the position of **Software Developer**.
+This is a simple fullstack web application that allows users to perform CRUD operations by utilizing the Reqres Public API. The app features a clean, minimalistic design and provides a seamless user experience for interacting with user and resource data. This project is a technical assignment for the [Andalan Software](https://andalansoftware.com/) for the position of **Software Developer**.
 
 Since it uses a public API, the data does not persist in a database and any interaction with the API does not affect the actual data on Reqres. This project is built using modern technologies, including:
 
@@ -89,6 +89,8 @@ http://localhost:3000
 ## Deployment
 
 This application is hosted on Vercel. You can access the live version of the app by visiting the following link:
+
+https://take-home-test-andalan-software-tsic.vercel.app/
 
 ## Conclusion
 
