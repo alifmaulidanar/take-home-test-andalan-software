@@ -22,14 +22,14 @@ export function RegisterForm({ success, onRegister, isLoading, error }: Register
   useEffect(() => {
     if (success) {
       toast({
-        title: "Login Successful",
-        description: `Welcome back, ${email}`,
+        title: "User Registered",
+        description: `${email} has been registered successfully!`,
       });
     }
 
     if (error) {
       toast({
-        title: "Login Failed",
+        title: "Registration Failed",
         description: error,
         variant: "destructive",
       });
