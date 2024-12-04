@@ -14,8 +14,8 @@ import AlertInfo from '@/components/customs/alert-info';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import BackHomeButton from '@/components/customs/buttons/back-home-button';
 import { createUser, deleteUser, fetchUsers, patchUser, updateUser } from './lib/data';
-import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogAction, AlertDialogCancel } from '@/components/ui/alert-dialog';
+import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogClose, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogAction, AlertDialogCancel, AlertDialogTitle, AlertDialogDescription } from '@/components/ui/alert-dialog';
 
 const UsersPage: FC = () => {
   const [page, setPage] = useState(1);
@@ -84,12 +84,25 @@ const UsersPage: FC = () => {
   };
 
   const handleCreateUser = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Authorized",
+        description: "You must be logged in to create a user.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const newUser = await createUser(name, job);
       setUsers((prevUsers) => [...prevUsers, newUser]);
       setShowCreateDialog(false);
       setName('');
       setJob('');
+      toast({
+        title: "User Created",
+        description: `User ${name} has been created.`,
+      })
     } catch (err) {
       console.error(err);
       setError('Failed to create user');
@@ -97,6 +110,15 @@ const UsersPage: FC = () => {
   };
 
   const handleUpdateUser = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Authorized",
+        description: "You must be logged in to update (PUT) a user.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (currentUser) {
       try {
         const updatedUser = await updateUser(currentUser.id, name, job);
@@ -104,6 +126,10 @@ const UsersPage: FC = () => {
         setShowUpdateDialog(false);
         setName('');
         setJob('');
+        toast({
+          title: "User Updated (PUT)",
+          description: `User ${name} has been updated.`,
+        })
       } catch (err) {
         console.error(err);
         setError('Failed to update user');
@@ -112,6 +138,15 @@ const UsersPage: FC = () => {
   };
 
   const handlePatchUser = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Authorized",
+        description: "You must be logged in to update (PATCH) a user.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (currentUser) {
       try {
         const updatedUser = await patchUser(currentUser.id, name, job);
@@ -119,6 +154,10 @@ const UsersPage: FC = () => {
         setShowPatchDialog(false);
         setName('');
         setJob('');
+        toast({
+          title: "User Updated (PATCH)",
+          description: `User ${name} has been updated.`,
+        })
       } catch (err) {
         console.error(err);
         setError('Failed to update user');
@@ -127,12 +166,25 @@ const UsersPage: FC = () => {
   };
 
   const handleDeleteUser = async () => {
+    if (!isLoggedIn) {
+      toast({
+        title: "Not Authorized",
+        description: "You must be logged in to delete a user.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (currentUser) {
       try {
         await deleteUser(currentUser.id);
         setUsers((prevUsers) => prevUsers.filter((user) => user.id !== currentUser.id));
         setShowDeleteDialog(false);
         setCurrentUser(null);
+        toast({
+          title: "User Deleted",
+          description: `User ${currentUser.first_name} ${currentUser.last_name} has been deleted.`,
+        })
       } catch (err) {
         console.error(err);
         setError('Failed to delete user');
@@ -217,19 +269,16 @@ const UsersPage: FC = () => {
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
-                    <h3 className="text-xl">Are you sure?</h3>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      You are about to delete user {user.first_name} {user.last_name}. This action cannot be undone.
+                    </AlertDialogDescription>
                     <AlertInfo />
                     <DialogFooter>
                       <AlertDialogCancel onClick={() => setShowDeleteDialog(false)}>
                         Cancel
                       </AlertDialogCancel>
-                      <AlertDialogAction onClick={() => {
-                        handleDeleteUser()
-                        toast({
-                          title: "User Deleted",
-                          description: `User ${user.first_name} ${user.last_name} has been deleted.`,
-                        })
-                      }} className="bg-red-600 text-white">
+                      <AlertDialogAction onClick={handleDeleteUser} className="bg-red-600 text-white">
                         Yes, Delete
                       </AlertDialogAction>
                     </DialogFooter>
@@ -267,7 +316,12 @@ const UsersPage: FC = () => {
       {/* Create User Dialog */}
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
         <DialogContent>
-          <DialogHeader>Create New User</DialogHeader>
+          <DialogHeader>
+            <DialogTitle>Create New User</DialogTitle>
+            <DialogDescription>
+              Create a new user by providing a name and job.
+            </DialogDescription>
+          </DialogHeader>
           <AlertInfo />
           <div className="grid gap-4">
             <Label>Name</Label>
@@ -276,13 +330,7 @@ const UsersPage: FC = () => {
             <Input value={job} onChange={(e) => setJob(e.target.value)} placeholder="Job" />
           </div>
           <DialogFooter>
-            <Button onClick={() => {
-              handleCreateUser()
-              toast({
-                title: "User Created",
-                description: `User ${name} has been created.`,
-              })
-            }}>Create</Button>
+            <Button onClick={handleCreateUser}>Create</Button>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
@@ -293,7 +341,12 @@ const UsersPage: FC = () => {
       {/* Update (PUT) User Dialog */}
       <Dialog open={showUpdateDialog} onOpenChange={setShowUpdateDialog}>
         <DialogContent>
-          <DialogHeader>Update (PUT) User</DialogHeader>
+          <DialogHeader>
+            <DialogTitle>Update (PUT) User</DialogTitle>
+            <DialogDescription>
+              Update a user by providing a name and job.
+            </DialogDescription>
+          </DialogHeader>
           <AlertInfo />
           <div className="grid gap-4">
             <Label>Name</Label>
@@ -302,13 +355,7 @@ const UsersPage: FC = () => {
             <Input value={job} onChange={(e) => setJob(e.target.value)} placeholder="Job" />
           </div>
           <DialogFooter>
-            <Button onClick={() => {
-              handleUpdateUser()
-              toast({
-                title: "User Updated (PUT)",
-                description: `User ${name} has been updated.`,
-              })
-            }}>Update (PUT)</Button>
+            <Button onClick={handleUpdateUser}>Update (PUT)</Button>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
@@ -319,7 +366,12 @@ const UsersPage: FC = () => {
       {/* Update (PATCH) User Dialog */}
       <Dialog open={showPatchDialog} onOpenChange={setShowPatchDialog}>
         <DialogContent>
-          <DialogHeader>Update (PATCH) User</DialogHeader>
+          <DialogHeader>
+            <DialogTitle>Update (PATCH) User</DialogTitle>
+            <DialogDescription>
+              Update a user by providing a name and job.
+            </DialogDescription>
+          </DialogHeader>
           <AlertInfo />
           <div className="grid gap-4">
             <Label>Name</Label>
@@ -328,13 +380,7 @@ const UsersPage: FC = () => {
             <Input value={job} onChange={(e) => setJob(e.target.value)} placeholder="Job" />
           </div>
           <DialogFooter>
-            <Button onClick={() => {
-              handlePatchUser()
-              toast({
-                title: "User Updated (PATCH)",
-                description: `User ${name} has been updated.`,
-              })
-            }}>Update (PATCH)</Button>
+            <Button onClick={handlePatchUser}>Update (PATCH)</Button>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>

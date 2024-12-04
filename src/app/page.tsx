@@ -10,7 +10,7 @@ const LandingPage: FC = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-semibold text-gray-800 mb-4">Take Home Test - Simple Web App Utilizing Reqres Public API</h1>
+        <h1 className="text-3xl font-semibold text-gray-800 mb-4">Take Home Test - Simple Web App Utilizing Reqres Public API</h1>
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Software Developer - Andalan Software</h2>
         <p className="text-xl text-gray-500">Alif Maulidanar</p>
       </div>

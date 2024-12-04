@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { useState } from "react";
 import AlertInfo from "./alert-info";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,7 +17,24 @@ interface RegisterFormProps {
 export function RegisterForm({ success, onRegister, isLoading, error }: RegisterFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { toast } = useToast()
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (success) {
+      toast({
+        title: "Login Successful",
+        description: `Welcome back, ${email}`,
+      });
+    }
+
+    if (error) {
+      toast({
+        title: "Login Failed",
+        description: error,
+        variant: "destructive",
+      });
+    }
+  }, [success, error, email, toast]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,14 +81,7 @@ export function RegisterForm({ success, onRegister, isLoading, error }: Register
                 required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading} onClick={() => {
-              setTimeout(() => {
-                toast({
-                  title: "User Registered",
-                  description: `${email} has been registered successfully!`,
-                });
-              }, 1000);
-            }}>
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Registering..." : "Register"}
             </Button>
           </div>
